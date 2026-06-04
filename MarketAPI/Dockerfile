@@ -4,10 +4,9 @@ EXPOSE 8080
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY ["MarketAPI.csproj", "MarketAPI/"]
-RUN dotnet restore "MarketAPI/MarketAPI.csproj"
-COPY . ./MarketAPI/
+COPY . .
 WORKDIR "/src/MarketAPI"
+RUN dotnet restore "MarketAPI.csproj"
 RUN dotnet build "MarketAPI.csproj" -c Release -o /app/build
 
 FROM build AS publish
