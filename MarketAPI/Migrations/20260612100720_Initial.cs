@@ -45,7 +45,8 @@ namespace MarketAPI.Migrations
                 {
                     ProductId = table.Column<int>(type: "INTEGER", nullable: false),
                     MarketId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Price = table.Column<decimal>(type: "TEXT", nullable: false)
+                    Price = table.Column<decimal>(type: "TEXT", nullable: false),
+                    DiscountPrice = table.Column<decimal>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {

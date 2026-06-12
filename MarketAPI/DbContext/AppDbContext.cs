@@ -15,7 +15,7 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // MarketProduct tablosunun çift anahtarlı (Composite Key) olduğunu belirtiyoruz
+       
         modelBuilder.Entity<MarketProduct>()
             .HasKey(mp => new { mp.ProductId, mp.MarketId });
 
