@@ -88,6 +88,7 @@ public class ProductController : ControllerBase
                 mp.Product.Name,
                 mp.Product.PhotoUrl,
                 mp.Price,
+                mp.DiscountPrice,
                 MarketName = mp.Market.Name
             })
             .ToListAsync();
