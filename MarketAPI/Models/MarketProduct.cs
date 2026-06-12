@@ -9,4 +9,5 @@ public class MarketProduct
     public Market Market { get; set; } = null!;
 
     public decimal Price { get; set; }
+    public decimal? DiscountPrice { get; set; }
 }
