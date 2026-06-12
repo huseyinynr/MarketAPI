@@ -24,17 +24,10 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-try
+using (var scope = app.Services.CreateScope())
 {
-    using (var scope = app.Services.CreateScope())
-    {
-        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-        db.Database.EnsureCreated();
-    }
-}
-catch (Exception ex)
-{
-    Console.WriteLine($"Database initialization error: {ex.Message}");
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    AppDbContext.InitializeAsync(db).Wait();
 }
 
 // Configure the HTTP request pipeline.
