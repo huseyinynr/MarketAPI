@@ -141,4 +141,40 @@ public class ProductController : ControllerBase
 
         return Ok(new { message = "Discounts cleared for all markets", affectedRows = marketProducts.Count });
     }
+
+    [HttpPatch("update-discount")]
+    public async Task<IActionResult> UpdateDiscount(string barcode, string marketName, [FromQuery] decimal? discountPrice)
+    {
+        var product = await _db.Products.FirstOrDefaultAsync(p => p.Barcode == barcode);
+        if (product == null)
+        {
+            return NotFound(new { message = "Product not found." });
+        }
+
+        var market = await _db.Markets.FirstOrDefaultAsync(m => m.Name == marketName);
+        if (market == null)
+        {
+            return NotFound(new { message = "Market not found." });
+        }
+
+        var marketProduct = await _db.MarketProducts
+            .FirstOrDefaultAsync(mp => mp.ProductId == product.Id && mp.MarketId == market.Id);
+
+        if (marketProduct == null)
+        {
+            return NotFound(new { message = "Product not found in this market." });
+        }
+
+        marketProduct.DiscountPrice = discountPrice;
+        await _db.SaveChangesAsync();
+
+        return Ok(new
+        {
+            message = "Discount updated successfully",
+            product = product.Name,
+            market = market.Name,
+            originalPrice = marketProduct.Price,
+            discountPrice = marketProduct.DiscountPrice
+        });
+    }
 }
