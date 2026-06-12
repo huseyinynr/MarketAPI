@@ -119,4 +119,26 @@ public class ProductController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpPatch("clear-discount")]
+    public async Task<IActionResult> ClearDiscount(string barcode)
+    {
+        var marketProducts = await _db.MarketProducts
+            .Where(mp => mp.Product.Barcode == barcode)
+            .ToListAsync();
+
+        if (!marketProducts.Any())
+        {
+            return NotFound(new { message = "Product not found." });
+        }
+
+        foreach (var mp in marketProducts)
+        {
+            mp.DiscountPrice = null;
+        }
+
+        await _db.SaveChangesAsync();
+
+        return Ok(new { message = "Discounts cleared for all markets", affectedRows = marketProducts.Count });
+    }
 }
