@@ -96,6 +96,35 @@ public class ProductController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("all")]
+    public async Task<IActionResult> GetAllProducts([FromQuery] string? category, [FromQuery] string? search)
+    {
+        var query = _db.MarketProducts.AsQueryable();
+
+        if (!string.IsNullOrEmpty(category))
+            query = query.Where(mp => mp.Product.CategoryName == category);
+
+        if (!string.IsNullOrEmpty(search))
+            query = query.Where(mp => mp.Product.Name.Contains(search));
+
+        var result = await query
+            .Select(mp => new
+            {
+                Barcode = mp.Product.Barcode,
+                ProductName = mp.Product.Name,
+                ImageUrl = mp.Product.PhotoUrl,
+                Category = mp.Product.CategoryName,
+                Price = mp.Price,
+                DiscountPrice = mp.DiscountPrice,
+                MarketName = mp.Market.Name,
+                Currency = "TRY"
+            })
+            .Distinct()
+            .ToListAsync();
+
+        return Ok(new { success = true, products = result });
+    }
+
     [HttpGet("getallproducts")]
     public async Task<IActionResult> GetProductsByMarket(int marketId)
     {
