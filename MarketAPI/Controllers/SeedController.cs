@@ -15,6 +15,15 @@ public class SeedController : ControllerBase
         _db = db;
     }
 
+    [HttpPost("reset")]
+    public async Task<IActionResult> Reset()
+    {
+        await _db.Database.EnsureDeletedAsync();
+        await _db.Database.EnsureCreatedAsync();
+        await AppDbContext.InitializeAsync(_db);
+        return Ok(new { message = "Database reset and reseeded." });
+    }
+
     [HttpPost("initialize")]
     public async Task<IActionResult> InitializeData()
     {
