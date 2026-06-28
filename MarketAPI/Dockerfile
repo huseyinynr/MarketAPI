@@ -15,5 +15,5 @@ RUN dotnet publish "MarketAPI.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-COPY MarketAPI/market.db .
+COPY --from=build /src/MarketAPI/market.db .
 ENTRYPOINT ["dotnet", "MarketAPI.dll"]
