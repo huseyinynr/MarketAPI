@@ -149,6 +149,19 @@ public class ProductController : ControllerBase
         return Ok(result);
     }
 
+    [HttpPatch("update-product")]
+    public async Task<IActionResult> UpdateProduct(string barcode, [FromQuery] string? photoUrl, [FromQuery] string? categoryName)
+    {
+        var product = await _db.Products.FirstOrDefaultAsync(p => p.Barcode == barcode);
+        if (product == null) return NotFound(new { message = "Product not found." });
+
+        if (photoUrl != null) product.PhotoUrl = photoUrl;
+        if (categoryName != null) product.CategoryName = categoryName;
+
+        await _db.SaveChangesAsync();
+        return Ok(new { message = "Product updated.", barcode, photoUrl = product.PhotoUrl, category = product.CategoryName });
+    }
+
     [HttpPatch("clear-discount")]
     public async Task<IActionResult> ClearDiscount(string barcode)
     {
