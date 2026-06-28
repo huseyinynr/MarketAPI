@@ -25,6 +25,7 @@ public class AppDbContext : DbContext
     {
         try
         {
+            await context.Database.EnsureDeletedAsync();
             await context.Database.EnsureCreatedAsync();
 
             if (context.Markets.Any()) return;
@@ -41,17 +42,17 @@ public class AppDbContext : DbContext
 
             var products = new[]
             {
-                new Product { Barcode = "8692005190019", Name = "KOOP Süt 1L Tam Yağlı", PhotoUrl = "https://via.placeholder.com/200?text=KOOP" },
-                new Product { Barcode = "5449000000996", Name = "Coca-Cola 330ML", PhotoUrl = "https://via.placeholder.com/200?text=CocaCola" },
-                new Product { Barcode = "5449000003102", Name = "Fanta 330ml", PhotoUrl = "https://via.placeholder.com/200?text=Fanta" },
-                new Product { Barcode = "8690504020509", Name = "Ülker Çikolatalı Gofret 36GR", PhotoUrl = "https://via.placeholder.com/200?text=Ulker" },
-                new Product { Barcode = "8690526011073", Name = "Eti Tutku", PhotoUrl = "https://via.placeholder.com/200?text=EtiTutku" },
-                new Product { Barcode = "8690526095417", Name = "Eti Karam Gurme 50GR", PhotoUrl = "https://via.placeholder.com/200?text=EtiKaram" },
-                new Product { Barcode = "8690624105650", Name = "Filiz Spagetti Makarna 500G", PhotoUrl = "https://via.placeholder.com/200?text=Filiz" },
-                new Product { Barcode = "8690632031231", Name = "Nescafe Gold 100GR", PhotoUrl = "https://via.placeholder.com/200?text=Nescafe" },
-                new Product { Barcode = "8711000050127", Name = "Redbull 250ML", PhotoUrl = "https://via.placeholder.com/200?text=Redbull" },
-                new Product { Barcode = "8694997019118", Name = "Icy 0.5L Su", PhotoUrl = "https://via.placeholder.com/200?text=Icy" },
-                new Product { Barcode = "5053990127740", Name = "Pringles Sour Cream & Onion 165GR", PhotoUrl = "https://via.placeholder.com/200?text=Pringles" }
+                new Product { Barcode = "8692005190019", Name = "KOOP 1L Tam Yağlı Süt", PhotoUrl = "https://www.kibrissanalmarket.com/wp-content/uploads/2021/08/8692005190019-1.jpg", CategoryName = "Dairy" },
+                new Product { Barcode = "5449000000996", Name = "Coca-Cola 330ML", PhotoUrl = "https://www.torontopizza.com.cy/menu/menu/404-large_default/coca-cola.jpg", CategoryName = "Beverages" },
+                new Product { Barcode = "5449000003102", Name = "Fanta 330ml", PhotoUrl = "https://images.migrosone.com/sanalmarket/product/08020000/08020000_1-c20362.jpg", CategoryName = "Beverages" },
+                new Product { Barcode = "8690504020509", Name = "Ülker Çikolatalı Gofret 36GR", PhotoUrl = "https://images.migrosone.com/sanalmarket/product/07167716/7167716-c711c5-1650x1650.jpg", CategoryName = "Snacks" },
+                new Product { Barcode = "8690526011073", Name = "Eti Tutku", PhotoUrl = "https://images.migrosone.com/sanalmarket/product/7010979/7010979-37b062-1650x1650.jpg", CategoryName = "Snacks" },
+                new Product { Barcode = "8690526095417", Name = "Eti Karam Gurme 50GR", PhotoUrl = "https://images.migrosone.com/macrocenter/product/07160817/7160817-b58034.jpg", CategoryName = "Snacks" },
+                new Product { Barcode = "8690624105650", Name = "Filiz Spagetti Makarna 500G", PhotoUrl = "https://foodexfoodco.com/storage/uploads/products/5030356-59bd01-1650x1650_500x500.jpg", CategoryName = "Food" },
+                new Product { Barcode = "8690632031231", Name = "Nescafe Gold 100GR", PhotoUrl = "https://images.migrosone.com/macrocenter/product/03231301/3231301_1-cbcfab.jpg", CategoryName = "Beverages" },
+                new Product { Barcode = "9002490100070", Name = "Redbull Energy Drink 250ML", PhotoUrl = "https://images.migrosone.com/sanalmarket/product/08110030/08110030-a4b666-1650x1650.png", CategoryName = "Beverages" },
+                new Product { Barcode = "8694997019118", Name = "Icy 0.5L Su", PhotoUrl = "https://www.icysu.com/uploads/images/0-5-lt-icy-su-8299.jpg", CategoryName = "Beverages" },
+                new Product { Barcode = "5053990127740", Name = "Pringles Sour Cream & Onion 165GR", PhotoUrl = "https://images.kglobalservices.com/www.pringles.com_ie/en_ie/product/product_6598150/prod_img-6598524_pringles-sour-cream-amp-onion-200g.png", CategoryName = "Snacks" }
             };
 
             context.Markets.AddRange(markets);
