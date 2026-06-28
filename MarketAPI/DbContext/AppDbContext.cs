@@ -25,7 +25,6 @@ public class AppDbContext : DbContext
     {
         try
         {
-            await context.Database.EnsureDeletedAsync();
             await context.Database.EnsureCreatedAsync();
 
             if (context.Markets.Any()) return;
